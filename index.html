@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Internal, But Public, Updates</title>
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            font-family: 'Courier New', Courier, monospace;
+            background-color: black;
+            color: limegreen;
+        }
+
+        .quarter {
+            width: 50%;
+            height: 50%;
+            float: left;
+            box-sizing: border-box;
+            cursor: pointer;
+            position: relative;
+            transition: width 0.5s, height 0.5s; /* Added transition for smooth animation */
+        }
+
+        .quarter.expanded {
+            width: 100%;
+            height: 100%;
+            z-index: 10;
+        }
+
+        .quarter:hover {
+            background-color: rgba(0, 128, 0, 0.3); /* Slight green tint on hover */
+        }
+
+        .quarter:nth-child(odd) {
+            border-right: 2px solid limegreen;
+        }
+
+        .quarter:nth-child(1), .quarter:nth-child(2) {
+            border-bottom: 2px solid limegreen;
+        }
+
+        .header {
+            text-align: center;
+            margin-top: 20%;
+            font-size: 24px;
+        }
+
+        .notes-section {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: black;
+            padding: 2% 4%;
+            box-sizing: border-box;
+            font-size: 18px;
+            overflow: auto;
+        }
+
+        .notes-section textarea {
+            width: 100%;
+            height: 80%;
+            background-color: black;
+            color: limegreen;
+            border: 2px solid limegreen;
+            padding: 1%;
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        .back-btn {
+            display: block;
+            width: 80px;
+            margin: 20px auto;
+            padding: 10px;
+            text-align: center;
+            background-color: limegreen;
+            color: black;
+            cursor: pointer;
+        }
+
+    </style>
+    <script>
+        function openNotes(element, notesId) {
+    // Hide all quarters
+    var quarters = document.querySelectorAll('.quarter');
+    quarters.forEach(function(quarter) {
+        quarter.style.display = 'none';
+    });
+
+    // Display only the clicked quarter in full screen
+    element.style.display = 'block';
+    element.classList.add('expanded');
+
+    var notes = document.getElementById(notesId);
+    notes.style.display = "block";
+}
+
+function closeNotes(element, notesId) {
+    // Hide notes section of the clicked quarter
+    var notes = document.getElementById(notesId);
+    notes.style.display = "none";
+
+    // Restore display for all quarters and remove expanded class from the clicked quarter
+    var quarters = document.querySelectorAll('.quarter');
+    quarters.forEach(function(quarter) {
+        quarter.style.display = 'block';
+        quarter.classList.remove('expanded');
+    });
+}
+    </script>
+</head>
+<body>
+    <div class="quarter" onclick="openNotes(this, 'notes1')">
+        <div class="header">Company Plans</div>
+        <div id="notes1" class="notes-section">
+          <textarea  placeholder="Write your company plans..." readonly>
+            Working on 2 research tools. One tool I'm confident on using for the next couple months with consistent modifications. The other is a little more a hail mary throw that's a public tool using nifty enough behavioral analysis work against a section I'm interested in. Doing an automated corpus builder, and will determine how much I invest into this tool based on the outcome of a few attempts at building the corpus.
+          </textarea>
+            <span class="back-btn" onclick="event.stopPropagation(); closeNotes(this.parentElement.parentElement, 'notes1')">Back</span>
+        </div>
+    </div>
+    <div class="quarter" onclick="openNotes(this, 'notes2')">
+        <div class="header">Immediate Resource Usage</div>
+        <div id="notes2" class="notes-section">
+            <textarea readonly>
+              104 Cores @ 2.1GHz (216 logical cores)
+             
+              Current deployment of internal project 1.1.0 is running a 60% usage.
+             
+            </textarea>
+            <span class="back-btn" onclick="event.stopPropagation(); closeNotes(this.parentElement.parentElement, 'notes2')">Back</span>
+        </div>
+    </div>
+    <div class="quarter" onclick="openNotes(this, 'notes3')">
+        <div class="header">Calendar</div>
+        <div id="notes3" class="notes-section">
+            <textarea readonly>No scheduled off-the-grid times</textarea>
+            <span class="back-btn" onclick="event.stopPropagation(); closeNotes(this.parentElement.parentElement, 'notes3')">Back</span>
+        </div>
+    </div>
+    <div class="quarter" onclick="openNotes(this, 'notes4')">
+        <div class="header">Results</div>
+        <div id="notes4" class="notes-section">
+            <textarea readonly>
+            August 2023: 
+                > 2 research tools were setup and completed. 
+                    > 1: Ready to deploy on the range. 
+                    > 2: Waiting a few weeks to download a couple TBs (at a pretty slow rate) of a corpus to sift through. 
+                > 1 outcome, but not a useful state
+
+
+            </textarea>
+            <span class="back-btn" onclick="event.stopPropagation(); closeNotes(this.parentElement.parentElement, 'notes4')">Back</span>
+        </div>
+    </div>
+</body>
+</html>
